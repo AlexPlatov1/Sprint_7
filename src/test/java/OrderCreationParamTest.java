@@ -3,7 +3,7 @@ import io.restassured.response.Response;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
-
+import static org.apache.http.HttpStatus.*;
 import java.util.stream.Stream;
 
 import static org.hamcrest.Matchers.notNullValue;
@@ -29,7 +29,7 @@ public class OrderCreationParamTest extends TestBase {
 
         Response response = orderSteps.createOrder(order);
         response.then()
-                .statusCode(201)
+                .statusCode(SC_CREATED)
                 .body("track", notNullValue());
 
         String track = response.jsonPath().getString("track");
@@ -44,7 +44,7 @@ public class OrderCreationParamTest extends TestBase {
 
         Response response = orderSteps.createOrder(order);
         response.then()
-                .statusCode(201)
+                .statusCode(SC_CREATED)
                 .body("track", notNullValue());
 
         String track = response.jsonPath().getString("track");

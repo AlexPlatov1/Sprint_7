@@ -6,7 +6,7 @@ public abstract class TestBase {
     protected static final String BASE_URI = "https://qa-scooter.praktikum-services.ru"; // Адрес API
 
     @BeforeAll
-    public static void setUp() {
+    public static void initialize() {
         RestAssured.baseURI = BASE_URI;
     }
 }

@@ -53,4 +53,12 @@ public class Courier {
                         .setLogin(RandomStringUtils.randomAlphanumeric(10))
                         .setPassword(RandomStringUtils.randomAlphanumeric(10));
         }
+
+        public String getLogin() {
+                return login;
+        }
+
+        public String getPassword() {
+                return password;
+        }
 }

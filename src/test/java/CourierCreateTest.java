@@ -1,8 +1,8 @@
 import io.qameta.allure.*;
 import io.restassured.response.Response;
 import org.junit.jupiter.api.*;
-
 import static org.hamcrest.Matchers.*;
+import static org.apache.http.HttpStatus.*;
 
 public class CourierCreateTest extends TestBase {
 
@@ -13,7 +13,7 @@ public class CourierCreateTest extends TestBase {
     @AfterEach
     void tearDown() {
         if (courierId != null) {
-            courierSteps.deleteCourier(courierId).then().statusCode(200);
+            courierSteps.deleteCourier(courierId).then().statusCode(SC_OK);
             courierId = null;
         }
         createdCourier = null;
@@ -27,10 +27,10 @@ public class CourierCreateTest extends TestBase {
 
         Response response = courierSteps.createCourier(courier);
         response.then()
-                .statusCode(201)
+                .statusCode(SC_CREATED)
                 .body("ok", equalTo(true));
         Response loginResponse = courierSteps.loginCourier(LoginCourier.from(courier));
-        loginResponse.then().statusCode(200).body("id", notNullValue());
+        loginResponse.then().statusCode(SC_OK).body("id", notNullValue());
         createdCourier = courier;
         courierId = Integer.valueOf(loginResponse.jsonPath().getString("id"));
     }
@@ -41,31 +41,43 @@ public class CourierCreateTest extends TestBase {
     void cannotCreateDuplicateCouriers() {
         Courier courier1 = Courier.getCourierWithLoginAndPassword();
         Response createResponse = courierSteps.createCourier(courier1);
-        createResponse.then().statusCode(201);
+        createResponse.then().statusCode(SC_CREATED);
         Response loginResponse = courierSteps.loginCourier(LoginCourier.from(courier1));
-        loginResponse.then().statusCode(200).body("id", notNullValue());
+        loginResponse.then().statusCode(SC_OK).body("id", notNullValue());
         createdCourier = courier1;
         Response duplicateResponse = courierSteps.createCourier(courier1);
         duplicateResponse.then()
-                .statusCode(409);
+                .statusCode(SC_CONFLICT);
     }
 
 
     @Step
     @Test
-    @DisplayName("Создание без обязательных полей возвращает ошибку")
-    void createWithoutRequiredFields() {
+    @DisplayName("Создание курьера без логина возвращает ошибку")
+    void createCourierWithoutLogin() {
         Courier courierWithoutLogin = Courier.getCourierWithPasswordOnly();
-        Response response1 = courierSteps.createCourier(courierWithoutLogin);
-        response1.then()
-                .statusCode(400);
+        Response response = courierSteps.createCourier(courierWithoutLogin);
+        response.then()
+                .statusCode(SC_BAD_REQUEST);
+    }
+
+    @Step
+    @Test
+    @DisplayName("Создание курьера без пароля возвращает ошибку")
+    void createCourierWithoutPassword() {
         Courier courierWithoutPassword = Courier.getCourierWithLoginOnly();
-        Response response2 = courierSteps.createCourier(courierWithoutPassword);
-        response2.then()
-                .statusCode(400);
+        Response response = courierSteps.createCourier(courierWithoutPassword);
+        response.then()
+                .statusCode(SC_BAD_REQUEST);
+    }
+
+    @Step
+    @Test
+    @DisplayName("Создание курьера без имени возвращает ошибку")
+    void createCourierWithoutFirstName() {
         Courier courierWithoutFirstName = Courier.getCourierWithFirstnameOnly();
-        Response response3 = courierSteps.createCourier(courierWithoutFirstName);
-        response3.then()
-                .statusCode(400);
+        Response response = courierSteps.createCourier(courierWithoutFirstName);
+        response.then()
+                .statusCode(SC_BAD_REQUEST);
     }
 }

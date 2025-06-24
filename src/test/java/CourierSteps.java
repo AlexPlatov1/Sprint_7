@@ -6,22 +6,23 @@ import static io.restassured.RestAssured.given;
 
 public class CourierSteps {
 
+    private static final String BASE_URL = "/api/v1/courier";
+
     @Step("Создать курьера с данными: {courier}")
     public Response createCourier(Courier courier) {
         return given()
                 .contentType("application/json")
                 .body(courier)
                 .when()
-                .post("/api/v1/courier");
+                .post(BASE_URL);
     }
 
-    // Класс CourierSteps.java
     @Step("Удалить курьера по id")
     public Response deleteCourier(int courierId) {
         return given()
                 .contentType("application/json")
                 .when()
-                .delete("/api/v1/courier/" + courierId);
+                .delete(BASE_URL + "/" + courierId);
     }
 
     @Step("Авторизоваться курьером с данными: {credentials}")
@@ -30,7 +31,6 @@ public class CourierSteps {
                 .contentType("application/json")
                 .body(credentials)
                 .when()
-                .post("/api/v1/courier/login");
+                .post(BASE_URL + "/login");
     }
-
 }

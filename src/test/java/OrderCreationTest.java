@@ -1,7 +1,7 @@
 import io.qameta.allure.Step;
 import io.restassured.response.Response;
 import org.junit.jupiter.api.Test;
-
+import static org.apache.http.HttpStatus.*;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
@@ -16,7 +16,7 @@ public class OrderCreationTest extends TestBase {
 
         Response response = orderSteps.createOrder(order);
         response.then()
-                .statusCode(201)
+                .statusCode(SC_CREATED)
                 .body("track", notNullValue());
 
         String track = response.jsonPath().getString("track");
@@ -31,7 +31,7 @@ public class OrderCreationTest extends TestBase {
 
         Response response = orderSteps.createOrder(order);
         response.then()
-                .statusCode(201)
+                .statusCode(SC_CREATED)
                 .body("track", notNullValue());
 
         String track = response.jsonPath().getString("track");
@@ -45,7 +45,7 @@ public class OrderCreationTest extends TestBase {
 
         Response response = orderSteps.createOrder(order);
         response.then()
-                .statusCode(201)
+                .statusCode(SC_CREATED)
                 .body("track", notNullValue());
 
         String track = response.jsonPath().getString("track");
@@ -60,7 +60,7 @@ public class OrderCreationTest extends TestBase {
 
         Response response = orderSteps.createOrder(order);
         response.then()
-                .statusCode(201)
+                .statusCode(SC_CREATED)
                 .body("track", notNullValue());
 
         String track = response.jsonPath().getString("track");

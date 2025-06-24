@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report-3.0.xsd" version="3.0" name="CourierAuthTest" time="5.954" tests="8" errors="0" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report-3.0.xsd" version="3.0" name="GetOrdersTest" time="2.924" tests="1" errors="0" skipped="0" failures="0">
   <properties>
     <property name="java.specification.version" value="24"/>
     <property name="sun.cpu.isalist" value="amd64"/>
@@ -59,18 +59,8 @@
     <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
     <property name="java.class.version" value="68.0"/>
   </properties>
-  <testcase name="loginWithNonExistentLogin" classname="CourierAuthTest" time="1.573"/>
-  <testcase name="courierCanLogin" classname="CourierAuthTest" time="0.469">
-    <system-out><![CDATA[{"id":553532}
-]]></system-out>
-  </testcase>
-  <testcase name="loginWithInvalidLogin" classname="CourierAuthTest" time="0.413"/>
-  <testcase name="loginWithoutLogin" classname="CourierAuthTest" time="0.504"/>
-  <testcase name="loginWithInvalidPassword" classname="CourierAuthTest" time="0.414"/>
-  <testcase name="loginWithNonExistentPassword" classname="CourierAuthTest" time="1.354"/>
-  <testcase name="loginWithoutPassword" classname="CourierAuthTest" time="0.558"/>
-  <testcase name="successfulLoginReturnsId" classname="CourierAuthTest" time="0.421">
-    <system-out><![CDATA[{"id":553538}
+  <testcase name="shouldReturnListOfOrders" classname="GetOrdersTest" time="2.923">
+    <system-out><![CDATA[Количество заказов: 30
 ]]></system-out>
   </testcase>
 </testsuite>
